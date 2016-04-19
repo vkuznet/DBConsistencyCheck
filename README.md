@@ -13,11 +13,11 @@ You'll develop tools which will allow to check the content of two databases
 and make a visual (web-based) representation of such differences.
 We need to compare the following information:
 
-- dataset exists both in PhEDEx and DBS [*]
+- dataset exists both in PhEDEx and DBS
 - dataset has same blocks in PhEDEx and DBS
 - For each block in dataset:
   - Block has same files (LFNs) in PhEDEx and DBS
-  - Block is in same open/closed status in PhEDEx and DBS [**]
+  - Block is in same open/closed status in PhEDEx and DBS
   - For each file in block:
     - File has same size in PhEDEx and DBS
     - File has same checksums in PhEDEx and DBS
