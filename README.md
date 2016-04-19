@@ -49,12 +49,11 @@ Tools to review:
 
 Here is an example of rows from HDFS
 ```
-/QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISpring16DR80-PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/AODSIM,845055,y,1459821572.83263,/QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISpring16DR80-PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/AODSIM#08a897c2-fb5d-11e5-b4d4-a0369f23d05a,6371058,1459881399.10162,n,/store/mc/RunIISpring16DR80/QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/40000/361ED125-54FB-E511-B217-0CC47A6C06C2.root,87425713,2852194134,"adler32:3aa28be9,cksum:808021722",1459894243.63832
+/QCD/v1/AODSIM,845055,y,1459821572.83263,/QCD/v1/AODSIM#123,6371058,1459881399.10162,n,/store/lfn.root,87425713,2852194134,"adler32:3aa28be9,cksum:808021722",1459894243.63832
 ```
 
 ### DBS data
-DBS data are available via DBS APIs,
-https://cms-http-group.web.cern.ch/cms-http-group/apidoc/dbs3-client/current/dbs.apis.html
+DBS data are available via [DBS APIs](https://cms-http-group.web.cern.ch/cms-http-group/apidoc/dbs3-client/current/dbs.apis.html)
 
 #### How to run DBS client on lxplus:
 ```
@@ -66,12 +65,14 @@ https://cms-http-group.web.cern.ch/cms-http-group/apidoc/dbs3-client/current/dbs
 ```
 
 Example of dbs_client.py script, we'll use the following procedure:
-1. fetch all datasets from DBS (it should yield around 100k datasets)
-2. loop over all datasets and get list of blocks (should retrieve closed blocks ~O(1M) in about 5-6h)
-   - get block attributes
-3. loop over all blocks and get list of files for individual block (should retrieve
-   around O(10M) files in about 27hours)
-   - get file attributes
+
+1 fetch all datasets from DBS (it should yield around 100k datasets)
+2 loop over all datasets and get list of blocks (should retrieve closed blocks ~O(1M) in about 5-6h)
+  - get block attributes
+3 loop over all blocks and get list of files for individual block (should retrieve
+  around O(10M) files in about 27hours)
+  - get file attributes
+
 This will create an initial copy of the data and we'll store it to HDFS.
 Then we'll use a timestamp to fetch newer datasets and repeat steps #2 and #3
 to get newer list of blocks/files on periodic basis.
