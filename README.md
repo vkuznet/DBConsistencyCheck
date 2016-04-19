@@ -23,9 +23,9 @@ We need to compare the following information:
     - File has same checksums in PhEDEx and DBS
 
 Things to be careful about in checking:
-[*] - Check only datasets/blocks/files older than 1 day
-[*] - Ignore test datasets which may be allowed to be inconsistent (need to define list of test datasets...)
-[**] - We have only closed blocks in DBS; so in practice we just need to 
+- Check only datasets/blocks/files older than 1 day
+- Ignore test datasets which may be allowed to be inconsistent (need to define list of test datasets...)
+- We have only closed blocks in DBS; so in practice we just need to 
 check that blocks are closed in PhEDEx in a reasonable time (less than 1
 day from end of file injections)
 
@@ -66,12 +66,10 @@ DBS data are available via [DBS APIs](https://cms-http-group.web.cern.ch/cms-htt
 
 Example of dbs_client.py script, we'll use the following procedure:
 
-1 fetch all datasets from DBS (it should yield around 100k datasets)
-2 loop over all datasets and get list of blocks (should retrieve closed blocks ~O(1M) in about 5-6h)
-  - get block attributes
-3 loop over all blocks and get list of files for individual block (should retrieve
+1. fetch all datasets from DBS (it should yield around 100k datasets)
+2. loop over all datasets and get list of blocks and their attributes (should retrieve closed blocks ~O(1M) in about 5-6h)
+3. loop over all blocks and get list of files (and their attribuets) for individual block (should retrieve
   around O(10M) files in about 27hours)
-  - get file attributes
 
 This will create an initial copy of the data and we'll store it to HDFS.
 Then we'll use a timestamp to fetch newer datasets and repeat steps #2 and #3
