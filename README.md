@@ -2,6 +2,11 @@
 CMS DBS vs PhEDEx database consistency check
 
 ## Project description
+CMS data are recorded in files, which are organized in datasets and blocks.
+Datasets are set of files with common physics content, and have a size ranging from 
+a few files and few GBs to several hundred thousand files and hundred TBs depending on the 
+physics definition. Datasets are divided into groups of files called blocks to simplify data management;
+each block has a typical size of 100-1000 files and 100 GB-1 TB.
 The Data bookkeeping system (DBS) and data location system (PhEDEx)
 are two most populated databases in CMS experiment. Both contains
 a meta-data information about CMS data, such as dataset, block, file information.
