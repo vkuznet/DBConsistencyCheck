@@ -47,9 +47,18 @@ Tools to review:
 - python language
 - HDFS, spark
 
-### PhEDEx data are on HDFS:/project/awg/cms/phedex/catalog/csv
+### PhEDEx data
+Phedex data can be found on HDFS:/project/awg/cms/phedex/catalog/csv
 ```
   hadoop fs -ls /project/awg/cms/phedex/catalog/csv
+```
+The schema description is here:
+http://awg-virtual.cern.ch/data-sources-index/projects/#phedex-file-catalog
+and in short it is:
+```
+dataset_name, dataset_id, dataset_is_open, dataset_time_create,
+block_name, block_id, block_time_create, block_is_open, file_lfn, file_id,
+filesize, checksum, file_time_create
 ```
 
 Here is an example of rows from HDFS
@@ -59,6 +68,8 @@ Here is an example of rows from HDFS
 
 ### DBS data
 DBS data are available via [DBS APIs](https://cms-http-group.web.cern.ch/cms-http-group/apidoc/dbs3-client/current/dbs.apis.html)
+
+recently we migrated DBS to HDFS:/project/awg/cms/dbs3verify/CMS_DBS3_PROD_GLOBAL
 
 #### How to run DBS client on lxplus:
 ```
