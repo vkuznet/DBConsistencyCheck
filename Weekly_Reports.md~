@@ -6,7 +6,7 @@
 
 * Created [Direction.md](https://github.com/aerophile/DBConsistencyCheck/blob/master/Direction.md) document.
 
-* The format for the inconsistency reporting log files was decided and agreed upon. (See [Direction.md](https://github.com/aerophile/DBConsistencyCheck/blob/master/Direction.md) )
+* The format for the inconsistency reporting log files was decided agreed upon. (See [Direction.md](https://github.com/aerophile/DBConsistencyCheck/blob/master/Direction.md) )
 
 * Downloaded and installed SQL Developer, which was especially troublesome for configuring jdk and took way too much time and too many attempts to get it working.
 
