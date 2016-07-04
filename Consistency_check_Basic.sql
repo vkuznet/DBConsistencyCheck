@@ -41,7 +41,7 @@ BEGIN
           WHEN (rec_dbs.BLOCK_SIZE != rec1_phedx.BYTES AND is_consistent) THEN is_consistent :=FALSE;
           WHEN (rec_dbs.FILE_COUNT != rec1_phedx.FILES AND is_consistent) THEN is_consistent :=FALSE;
           WHEN (is_consistent  AND ((rec_dbs.OPEN_FOR_WRITING = 1 AND rec1_phedx.IS_OPEN = 'n') OR (rec_dbs.OPEN_FOR_WRITING = 0 AND rec1_phedx.IS_OPEN = 'y')))
-          THEN is_consistent :=FALSE;
+          THEN is_consistent := FALSE;
           
           ELSE NULL;
        END CASE;
@@ -60,6 +60,7 @@ BEGIN
        -- Handles cases where a DBS block record is not found in PhEDX Block table 
         EXCEPTION
         when NO_DATA_FOUND THEN
+          dbms_output.put_line(' NOT CONSISTENT');
           CONTINUE;
        
        END;
