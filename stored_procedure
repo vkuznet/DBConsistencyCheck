@@ -1,0 +1,38 @@
+
+set serveroutput on;
+
+DECLARE
+
+
+  -- coursor and row variable declaration for DBS
+  CURSOR c_dbs IS 
+  SELECT * from cms_dbs3_prod_part.BLOCKS;
+  
+  rec_dbs  cms_dbs3_prod_part.BLOCKS%ROWTYPE;
+  
+  -- coursor and row variable declaration for PhEDX
+  CURSOR c_phedx IS 
+  SELECT * from cms_transfermgmt_part.T_DPS_BLOCK;
+  
+  rec_phedx  cms_transfermgmt_part.T_DPS_BLOCK%ROWTYPE;
+  
+BEGIN
+  OPEN c_dbs;
+  
+  OPEN c_phedx;
+  
+  loop
+    fetch c_dbs into rec_dbs;
+    exit when c_dbs%NOTFOUND;
+    
+    SELECT * into rec_phedx
+    FROM CMS_TRANSFERMGMT_PART.T_DPS_BLOCK
+    where cms_transfermgmt_part.T_DPS_BLOCK.NAME = rec_dbs.BLOCK_NAME;
+    
+    dbms_output.put_line(rec_dbs.BLOCK_NAME||'  ok  ' || rec_phedx.NAME);
+  end loop;
+  
+  
+  CLOSE c_dbs;
+  
+END;

@@ -37,7 +37,7 @@ An example for this would be
 2. Using these tools for a command line based retrieval and comparison of the data.
 3. Evaluating Performance of the methods.
 4. Creating the programs that utilise these methods.
-5. Evaluating Program and discusiing scalability issues.
+5. Evaluating Program and discusing scalability issues.
 6. Improving and testing the program.
 
 ## Possible approaches for the program
