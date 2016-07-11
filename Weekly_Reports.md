@@ -31,6 +31,19 @@
 
 * Working on the structre of the table for storing details of block level inconsistencies.
 
+## Week 3
+
+* Modularized most of the code into procedures which can be called by the main program for consistency verification. 
+
+* Encountered a new type of error (TOO_MANY_ROWS) when converting Block consistecy code to a procedure. The cause of the error was the presence of BLOCKs with same names in PhEDX. This is allowed as the blocks can have same names and can belong to different DBS's that is they all may not belong to the GLOBAL production DBS. Resolving this error requires the creation of a special procedure to handle this exceptional case.
+
+* Also Learnt about the differnt methods of data removal in DBS and PhEDX. While PhEDX removes and deletes data that is no longer required, DBS on the other hand stores such data along with parameters that declare it invalid. These parameters are stored either at the dataset level or at the File level. So this is the reason why earlier most of the inconsistencies were of the type present in DBS but not in PhEDX as most of these were invalid state/deleted Blocks.   
+
+* Developed the filelevel consistency verification procedure  wich takes the BLOCK ID as input to obtain files with the same Logical File name and checks for consistency of files by compairing checksums and Filesizes.
+
+* The method of storing Checksums is different in both Databases. In DBS, the files table has seperate columns for adler32 as well as cksum. MD5 column is also present but it is not being used consistency verification purposes. PhEDX stores all checksum values in a single column in a comma seperated key value format. Built a parser procedure for this column to return the parsed checksum values for verifying their consistency.
+
+* Currently working on integrating block and file level procedures along with error records insertion procedures.
 
 
 
