@@ -7,6 +7,9 @@ BEGIN
     BEGIN
     
     unix_time := ( SYSDATE - date '1970-01-01' ) * 60 * 60 * 24;
+
+    unix_time := TRUNC(unix_time);
+    
         INSERT INTO INCONSISTENT_BLOCKS (
 				DBS_BLOCK_ID,
 				PHEDX_BLOCK_ID,
