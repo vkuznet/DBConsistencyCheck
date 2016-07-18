@@ -14,9 +14,16 @@ BEGIN
 
 	    file_is_consistent boolean;
 
-	    checksum_var varchar2(20);
+	    adler32_value varchar2(30);
 
-	    adler32_var varchar2(20);
+	    cksum_value varchar2(30);
+
+	    checksum_status number(1);
+
+	    adler32_status number(1);
+
+	    size_status number(1);
+
 
 	   
 	  
@@ -32,6 +39,10 @@ BEGIN
 
 					  		file_is_consistent := True;
 
+					  		checksum_status := 1;
+							adler32_status	:= 1;
+							size_status		:= 1;
+
 							  dbms_output.put_line(rec_dbs_file.LOGICAL_FILE_NAME|| ' File located in DBS');
 
 							  SELECT * INTO rec1_phedx_file
@@ -43,13 +54,35 @@ BEGIN
 							   --same File size  check condition
 							   
           
-						          IF (file_is_consistent  AND rec_dbs_file.file_SIZE != rec1_phedx_file.FILESIZE ) THEN 
+						          IF (rec_dbs_file.file_SIZE != rec1_phedx_file.FILESIZE ) THEN 
 						          	file_is_consistent := FALSE;
-                        status_information_return := 'ATLEAST_ONE_INCONSISTENT';
+						          	size_status := 0 ;
+
+						          END IF;	
 
 
+						          	checksum_parser_phedx( rec1_phedx_file.checksum , adler32_value, cksum_value);
 
+
+						          IF (rec_dbs_file.CHECK_SUM != cksum_value AND (rec_dbs_file.CHECK_SUM != NULL AND cksum_value != 0))  THEN 
+						          	file_is_consistent := FALSE;
+						          	 checksum_status := 0 ;
+
+						          END IF;
+
+						          IF (rec_dbs_file.ADLER32 != adler32_value AND (rec_dbs_file.ADLER32 != 'NOTSET' AND adler32_value != 0)) THEN 
+						          	file_is_consistent := FALSE;
+						          	 adler32_status := 0 ;
+
+						          END IF;		
+
+                        		  --status_information_return := 'ATLEAST_ONE_INCONSISTENT';
+
+
+                        		 IF (file_is_consistent = FALSE) THEN 	
 						          	--insert row into table
+
+						           insert_inconsistent_file(rec_dbs_file.LOGICAL_FILE_NAME,checksum_status,adler32_status, size_status,rec_dbs_file.block_id,rec1_phedx_file.INBLOCK);
 
 						          END IF;	
 
@@ -75,6 +108,8 @@ BEGIN
 						        status_information_return := 'NO_FILES_FOUND_IN_PHEDX_FROM_DBS';
 
 						        --insert row into table
+
+						        insert_inconsistent_file(rec_dbs_file.LOGICAL_FILE_NAME, 2,2,2,rec_dbs_file.block_id,0);
                     CONTINUE;
 
 					    END;    
