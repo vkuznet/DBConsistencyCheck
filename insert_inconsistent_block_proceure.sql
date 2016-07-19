@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE insert_inconsistent_block(dbs_block in NUMBER, Phedx_block in NUMBER, file_status in NUMBER) IS
+CREATE OR REPLACE PROCEDURE insert_inconsistent_block(dbs_block in NUMBER, Phedx_block in NUMBER, file_status in NUMBER,size_status in NUMBER,count_status in NUMBER,open_status in NUMBER) IS
 BEGIN
 
   DECLARE
@@ -14,12 +14,16 @@ BEGIN
 				DBS_BLOCK_ID,
 				PHEDX_BLOCK_ID,
 				CONTAINS_FILES,
-				DISCOVERY_DATE)
+				DISCOVERY_DATE,
+				BLOCK_SIZE_STATUS,
+				File_count_status,
+				OPEN_MISMATCH
+				)
 				VALUES (
-				dbs_block,Phedx_block,file_status,unix_time
+				dbs_block,Phedx_block,file_status,unix_time,size_status,count_status,open_status
 				);
 
-	dbms_output.put_line('BLOCK Insert Successful');		
+	--dbms_output.put_line('BLOCK Insert Successful');		
   
     END;
 
