@@ -45,6 +45,18 @@
 
 * Currently working on integrating block and file level procedures along with error records insertion procedures.
 
+## Week 4
+
+* Created and tested File and Block Inconsistency tables. Also created the procedures ( [insert\_inconsistent\_block]() , [insert\_inconsistent\_file]() ) to store the details about the inconsitencies encountered. 
+
+* Integrated all the seperate procedures.
+
+* Encountered the buffer overflow error that limits the output of dbms_output.put_line to 1,000,000 bytes. This limit can be one ofthe causes to incorrect number of inconsistencies deteced. Recording inconsistencies in a table should resolve this problem.
+
+* Added all of the procedures created so far to the github repository.
+
+
+
 
 
 
