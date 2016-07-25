@@ -55,7 +55,18 @@
 
 * Added all of the procedures created so far to the github repository.
 
+## Week 5
 
+* Created File_level_invalidation procedure that goes through the inconsistent_blocks table and is able to produce details of blocks which have all invalid files in DBS and store them in invalid_dbs_blocks table.
+
+
+* Created a lighter version of consistency_verification procedure to aid the inconsistency verification procedure .
+
+* Did some basic tests on all of consistency verification procedures which included data being inserted into inconsistent_blocks and inconsistent_files tables.
+
+* As a result of the newly created insertion procedures, new insight into the number of inconsistencies was made, the latest numbers are 966,142 inconsistent blocks of which 133,643 were found to be invalid. 104,868 blocks have differences in file count, size or block open/close status.
+
+* Currently working on implementing Command line interface and it associated functions for consistency verification procedure. 
 
 
 
