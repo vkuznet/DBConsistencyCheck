@@ -54,3 +54,9 @@ DELETE  FROM INCONSISTENT_BLOCKS;
 
 ALTER TABLE inconsistent_blocks
 MODIFY discovery_date NUMBER;
+
+create table invalid_dbs_blocks
+(
+block_id number primary key not null,
+total_files number not null ,
+number_valid_files number not null);

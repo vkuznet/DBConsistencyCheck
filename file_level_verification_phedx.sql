@@ -42,7 +42,7 @@ Create or REPLACE Procedure file_level_verification_phedx( input_block_name IN v
 							FROM cms_dbs3_prod_part.files
 							WHERE rec1_phedx_file.LOGICAL_NAME = cms_dbs3_prod_part.files.LOGICAL_file_NAME;
 
-							dbms_output.put_line(rec1_phedx_file.LOGICAL_NAME || ' File located again in DBS');
+							--dbms_output.put_line(rec1_phedx_file.LOGICAL_NAME || ' File located again in DBS');
 
 					EXCEPTION
 
@@ -51,6 +51,8 @@ Create or REPLACE Procedure file_level_verification_phedx( input_block_name IN v
 						    dbms_output.put_line(' File NOT located in DBS');
 						    status_information_return := 'ATLEAST_ONE_MISING_IN_DBS';
 						    --code to add this file into the file inconsistency table
+
+						    insert_inconsistent_file(rec1_phedx_file.LOGICAL_NAME,2,2,2,0,rec1_phedx_file.INBLOCK);
 
 
 					END;
