@@ -15,6 +15,8 @@ Create or REPLACE Procedure file_level_verification_phedx( input_block_name IN v
 
 	    initial_select NUMBER;
       input_block_id varchar2(30);
+      adler32_value  varchar2(100 BYTE);
+       cksum_value  varchar2(100 BYTE);
 
 	  BEGIN
 	    
@@ -51,8 +53,10 @@ Create or REPLACE Procedure file_level_verification_phedx( input_block_name IN v
 						    dbms_output.put_line(' File NOT located in DBS');
 						    status_information_return := 'ATLEAST_ONE_MISING_IN_DBS';
 						    --code to add this file into the file inconsistency table
+						    --insert_inconsistent_file(rec1_phedx_file.LOGICAL_NAME,2,2,2,0,rec1_phedx_file.INBLOCK);
+						    checksum_parser_phedx( rec1_phedx_file.CHECKSUM, adler32_value, cksum_value);
 
-						    insert_inconsistent_file(rec1_phedx_file.LOGICAL_NAME,2,2,2,0,rec1_phedx_file.INBLOCK);
+						    insert_inconsistent_file(rec1_phedx_file.LOGICAL_NAME,NULL,NULL,NULL,NULL,rec1_phedx_file.INBLOCK,NULL,adler32_value,NULL,cksum_value,NULL,rec1_phedx_file.FILESIZE);
 
 
 					END;
