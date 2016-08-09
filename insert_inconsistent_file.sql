@@ -49,7 +49,7 @@ BEGIN
 					size_dbs,
 					size_phedx);
 
-	dbms_output.put_line('File Insert Successful');		
+	--dbms_output.put_line('File Insert Successful');		
   
     END;
 
