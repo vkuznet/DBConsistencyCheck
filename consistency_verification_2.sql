@@ -77,7 +77,7 @@ BEGIN
        IF (NOT is_consistent) THEN
         --dbms_output.put_line(' NOT CONSISTENT');
 
-        insert_inconsistent_block(rec_dbs.BLOCK_ID,rec1_phedx.ID,rec_dbs.BLOCK_SIZE,rec1_phedx.BYTES,rec_dbs.FILE_COUNT,rec1_phedx.FILES,rec_dbs.OPEN_FOR_WRITING,open_status_phedx);--,size_status,count_status,open_status);
+        insert_inconsistent_block(rec_dbs.BLOCK_ID,rec1_phedx.ID,rec_dbs.BLOCK_SIZE,rec1_phedx.BYTES,rec_dbs.FILE_COUNT,rec1_phedx.FILES,rec_dbs.OPEN_FOR_WRITING,open_status_phedx,rec_dbs.DATASET_ID,rec1_phedx.DATASET,rec_dbs.BLOCK_NAME,rec1_phedx.NAME);--,size_status,count_status,open_status);
 
        
         --dbms_output.put_line('Number of inconsistencies '||counter ||' ');
@@ -95,7 +95,7 @@ BEGIN
         when NO_DATA_FOUND THEN
         
         -- Block not present in PhEDX
-          insert_inconsistent_block(rec_dbs.BLOCK_ID,NULL,rec_dbs.BLOCK_SIZE,NULL,rec_dbs.FILE_COUNT,NULL,rec_dbs.OPEN_FOR_WRITING,NULL);
+          insert_inconsistent_block(rec_dbs.BLOCK_ID,NULL,rec_dbs.BLOCK_SIZE,NULL,rec_dbs.FILE_COUNT,NULL,rec_dbs.OPEN_FOR_WRITING,NULL,rec_dbs.DATASET_ID,NULL,rec_dbs.BLOCK_NAME,NULL);
         
 
           CONTINUE;
