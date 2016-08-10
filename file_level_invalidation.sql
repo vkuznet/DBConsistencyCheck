@@ -15,6 +15,7 @@ BEGIN
 	    invalid_file_counter number;
 
 	    file_counter number;
+	    unix_time number;
 			
 
 	   
@@ -26,7 +27,7 @@ BEGIN
 
 	  		
 			
-			  FOR rec_INCONSISTENT_BLOCKS IN (SELECT * FROM INCONSISTENT_BLOCKS where INCONSISTENT_BLOCKS.phedx_block_id = 0) 
+			  FOR rec_INCONSISTENT_BLOCKS IN (SELECT * FROM INCONSISTENT_BLOCKS where INCONSISTENT_BLOCKS.phedx_block_id IS NULL) 
 			  LOOP
 			  
 					  BEGIN
@@ -54,16 +55,20 @@ BEGIN
 
 								invalid_file_counter := invalid_file_counter + 1;
 
-								dbms_output.put_line('count is '|| invalid_file_counter);
+								--dbms_output.put_line('count is '|| invalid_file_counter);
 							END IF;
 					  
 					  		END;
 
 					  	END LOOP;
 
+					  	    unix_time := ( SYSDATE - date '1970-01-01' ) * 60 * 60 * 24;
+
+   							unix_time := TRUNC(unix_time);
+
 					  	IF (invalid_file_counter = file_counter) THEN
 
-								dbms_output.put_line('its invalid completely');
+								--dbms_output.put_line('its invalid completely');
 								
 								/* 
 								UPDATE INCONSISTENT_BLOCKS
@@ -72,14 +77,20 @@ BEGIN
 								*/
 
 								insert into invalid_dbs_blocks
-									values(rec_INCONSISTENT_BLOCKS.dbs_block_id,file_counter,invalid_file_counter);
-									commit;
+									values(rec_INCONSISTENT_BLOCKS.dbs_block_id,file_counter,invalid_file_counter,1,unix_time);
+									
+
+							ELSIF (invalid_file_counter != 0) THEN
+							
+								insert into invalid_dbs_blocks
+									values(rec_INCONSISTENT_BLOCKS.dbs_block_id,file_counter,invalid_file_counter,0,unix_time);
+									
 
 							END IF;
 					  	
 					  	END;	
 
-            
+            COMMIT;
                 
 			  
 			  END LOOP;

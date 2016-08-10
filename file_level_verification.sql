@@ -1,6 +1,6 @@
 /* Procedure to Verify Consistency at file level when block id for files is provided as input*/
 
-Create or REPLACE Procedure file_level_verification( input_block_id in varchar2,  status_information_return OUT varchar2 ) IS
+Create or REPLACE Procedure file_level_verification( input_block_id in varchar2) IS
 
 
     
@@ -35,7 +35,7 @@ BEGIN
 			  
 					  BEGIN
             
-                status_information_return := 'NORMAL';
+                --status_information_return := 'NORMAL';
 
 					  		file_is_consistent := True;
 
@@ -82,7 +82,7 @@ BEGIN
                         		 IF (file_is_consistent = FALSE) THEN 	
 						          	--insert row into table
 
-						           insert_inconsistent_file(rec_dbs_file.LOGICAL_FILE_NAME,checksum_status,adler32_status, size_status,rec_dbs_file.block_id,rec1_phedx_file.INBLOCK);
+						           insert_inconsistent_file(rec_dbs_file.LOGICAL_FILE_NAME,checksum_status,adler32_status, size_status,rec_dbs_file.block_id,rec1_phedx_file.INBLOCK,rec_dbs_file.CHECK_SUM,cksum_value ,rec_dbs_file.ADLER32,adler32_value,rec_dbs_file.file_SIZE,rec1_phedx_file.FILESIZE);
 
 						          END IF;	
 
@@ -103,19 +103,20 @@ BEGIN
 
 						        when NO_DATA_FOUND THEN
 
-						        dbms_output.put_line(' File NOT located in PhEDX');
+						        --dbms_output.put_line(' File NOT located in PhEDX');
 
-						        status_information_return := 'NO_FILES_FOUND_IN_PHEDX_FROM_DBS';
+						        --status_information_return := 'NO_FILES_FOUND_IN_PHEDX_FROM_DBS';
 
 						        --insert row into table
 
-						        insert_inconsistent_file(rec_dbs_file.LOGICAL_FILE_NAME, 2,2,2,rec_dbs_file.block_id,0);
+						        insert_inconsistent_file(rec_dbs_file.LOGICAL_FILE_NAME,NULL,NULL,NULL,rec_dbs_file.block_id,NULL,rec_dbs_file.CHECK_SUM,NULL,rec_dbs_file.ADLER32,NULL,rec_dbs_file.file_SIZE,NULL);
                     CONTINUE;
 
 					    END;    
 			  
 			  END LOOP;
 
+	  COMMIT;
 	  END;
 
 
