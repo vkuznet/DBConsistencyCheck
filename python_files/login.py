@@ -1,4 +1,12 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+"""
+Returns Login credentials.
+
+"""
+
 def return_credentials():
+	"Provide login credentials to connect_db.py"
 	credentials = {
 		'username' : 'cms_dbs_tranf_ver',
 		'password' : '',

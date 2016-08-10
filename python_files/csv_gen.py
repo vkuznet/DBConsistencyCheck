@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+"""
+create formatted CSV files using create_csv function.
+
+"""
 
 import cx_Oracle
 import csv
@@ -5,25 +11,12 @@ import os
 import connect_db
 from csv_functions import rearrange
 from csv_functions import generate_header
+from csv_functions import assign_sql
 
 def create_csv(table_name,verbosity,file_location="./",output_limiter="none"):
-	sql_container=["SELECT * FROM " + str(table_name),"SELECT * FROM " + str(table_name)+" where phedx_block_id is NULL ","SELECT * FROM " + str(table_name)+" where dbs_block_id is NULL","SELECT * FROM " + str(table_name)+" where block_id_phedx is NULL","SELECT * FROM " + str(table_name)+" where block_id_dbs is NULL"]
-	 
-	if output_limiter == "none":
-		SQL= sql_container[0]
+	"create formatted CSV file based on arguments provided "
 
-	elif output_limiter == "dbs" and table_name == "inconsistent_blocks":
-		SQL = sql_container[1]
-
-	elif output_limiter == "phedx" and table_name == "inconsistent_blocks":
-		SQL = sql_container[2] 
-
-	elif output_limiter == "dbs" and table_name == "inconsistent_files":
-		SQL = sql_container[3] 
-
-	elif output_limiter == "phedx" and table_name == "inconsistent_files":
-		SQL = sql_container[4] 
-
+	SQL = assign_sql(table_name,output_limiter)
 
 	if output_limiter == "none":
 		filename=  str(table_name) +".csv"
@@ -105,20 +98,20 @@ def create_csv(table_name,verbosity,file_location="./",output_limiter="none"):
 			for row in cursor:
 				output.writerow(row[:-1])
 
-
-
 	else:
 		for row in cursor:
 			
 			print row
 			output.writerow(row)
     	
-        
-	
 	cursor.close()
 	connection.close()
 	FILE.close()
 
-if __name__ == "__main__":
+def main():
+	"Main function"
 	create_csv('inconsistent_blocks',False,"./","none")
 	create_csv('inconsistent_files',False,"./","none")
+
+if __name__ == "__main__":
+	main()
