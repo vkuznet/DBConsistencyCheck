@@ -9,7 +9,11 @@ BLOCK_SIZE_PhEDX NUMBER,
 FILE_COUNT_DBS NUMBER,
 FILE_COUNT_PhEDX NUMBER,
 OPEN_MISMATCH_DBS NUMBER(1),
-OPEN_MISMATCH_PhEDX NUMBER(1)
+OPEN_MISMATCH_PhEDX NUMBER(1),
+DATASET_ID_DBS NUMBER(38,0),
+DATASET_ID_PhEDX NUMBER(38,0)
+BLOCK_NAME_DBS VARCHAR2(500 BYTE),
+BLOCK_NAME_PHEDX VARCHAR2(1000 BYTE)
 );
 
 
@@ -56,39 +60,14 @@ BEGIN
   FROM dual;
 END;
 
-INSERT INTO INCONSISTENT_BLOCKS (
-DBS_BLOCK_ID,
-PHEDX_BLOCK_ID,
-CONTAINS_FILES,
-DISCOVERY_DATE)
-VALUES (
-00000,00001,1,SYSDATE
-);
-
-DELETE  FROM INCONSISTENT_BLOCKS;
-
-ALTER TABLE inconsistent_blocks
-MODIFY discovery_date NUMBER;
 
 create table invalid_dbs_blocks
 (
 block_id number primary key not null,
 total_files number not null ,
-total_invalid_Files number not null
-);
-
-ALTER TABLE invalid_dbs_blocks
-ADD (
+total_invalid_Files number not null,
 is_block_invalid number(1),
 insert_date number
 );
 
 
-alter table inconsistent_blocks
-add 
-(
-DATASET_ID_DBS NUMBER(38,0),
-DATASET_ID_PhEDX NUMBER(38,0)
-BLOCK_NAME_DBS VARCHAR2(500 BYTE),
-BLOCK_NAME_PHEDX VARCHAR2(1000 BYTE)
-);
