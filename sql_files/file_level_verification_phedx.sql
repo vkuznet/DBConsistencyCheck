@@ -1,5 +1,3 @@
-
-
 Create or REPLACE Procedure file_level_verification_phedx( input_block_id IN varchar2)--, status_information_return OUT varchar2 ) 
 IS
 
