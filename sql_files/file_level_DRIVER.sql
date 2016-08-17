@@ -6,7 +6,7 @@ BEGIN
 
 	  DECLARE
 
-	  rec_inconsistent_blocks CMS_DBS_TRANF_VER.inconsistent_blocks%ROWTYPE;
+	  rec_inconsistent_blocks inconsistent_blocks%ROWTYPE;
 
 	  BEGIN
 	  	
@@ -25,3 +25,4 @@ BEGIN
 
 	  END;
 END;
+/
