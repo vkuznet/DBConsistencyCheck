@@ -1,4 +1,4 @@
---WARNING : Execute only f you're sure about what you're doing
+--WARNING : Execute only if you're sure about what you're doing
 truncate table inconsistent_blocks;
 truncate table inconsistent_files;
 truncate table invalid_dbs_blocks;
