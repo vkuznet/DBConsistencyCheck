@@ -4,7 +4,7 @@
 
 Phedex and DBS store checksums in different ways. While DBS has seperate fields for each type of checksum, Phedex stores all checksume in a single field as a set of key value pairs.
 
-This procedure takes the string of key value pairs f phedex checksums as input and provides outputs in the form of Adler32 and Checksum.These values then can be used for comparison of files between DBS and PhEDEX.
+This procedure takes the string of key value pairs of phedex checksums as input and provides output in the form of Adler32 and Checksum.These values are then used for comparison of files between DBS and PhEDEX.
 
 #Table\_create
 
