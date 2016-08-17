@@ -1,7 +1,4 @@
-/* This Function iterates over files in PhEDX's T_DPS_FILE table using a block_id to verify the existence of the same 
-files in DBS's table of FILES. It does not need to perform parameter checking processes as that is already handled
-by the file_level_verification and if files of PhEDX are present in DBS then their parameters are assumed to have been
-Checked and handled by the other procedure.This procedure Just detects absence of PhEDX files in DBS files.*/
+
 
 Create or REPLACE Procedure file_level_verification_phedx( input_block_id IN varchar2)--, status_information_return OUT varchar2 ) 
 IS
@@ -27,7 +24,8 @@ IS
 
 	  	IF (initial_select = 0) THEN
 
-	  	 dbms_output.put_line(' No Rows Selected in PhEDX');
+	  	continue;	
+	  	 --dbms_output.put_line(' No Rows Selected in PhEDX');
 	  	 --status_information_return := 'NO_FILES_FOUND_IN_PHEDX';
 
 	  	 --code to add all files into the file inconsistency table

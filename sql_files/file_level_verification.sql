@@ -41,7 +41,7 @@ BEGIN
 
 					  		checksum_status := 1;
 							adler32_status	:= 1;
-							size_status		:= 1;
+							size_status	:= 1;
 
 							  dbms_output.put_line(rec_dbs_file.LOGICAL_FILE_NAME|| ' File located in DBS');
 
