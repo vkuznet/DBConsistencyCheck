@@ -1,4 +1,14 @@
-/* Procedure to scan inconsistent_blocks table  and insert block_ids of invalid blocks to invalid_dbs_blocks table */
+-- =============================================
+-- Author: Shubham Gupta 
+-- Create date: 19.08.16
+-- Description: /* Procedure to scan inconsistent_blocks table  and insert block_ids of invalid blocks to invalid_dbs_blocks table */
+-- Finds all DBS blocks from the inconsistent_blocks tables which have no equivalent PhEDEX counterpart and then scans all of their 
+-- files for the validity status of the files. If all files are found to be invalid then this is stored in the invalid_dbs_blocks. It  
+-- also stores the field IS_BLOCK_INVALID as 1. If not all files are invalid, the IS_BLOCK_INVALID is stored as zero along with the 
+-- number of invalid and total files. Also if the number of invalid files is found to be zero then details of such a block are not
+-- recorded in the invalid_dbs_blocks table.
+-- =============================================
+
 
 Create or REPLACE Procedure file_level_invalidation IS
 
@@ -22,19 +32,12 @@ BEGIN
 	  
 
 	  BEGIN
-
-
-
-	  		
-			
 			  FOR rec_INCONSISTENT_BLOCKS IN (SELECT * FROM INCONSISTENT_BLOCKS where INCONSISTENT_BLOCKS.phedx_block_id IS NULL) 
 			  LOOP
 			  
 					  BEGIN
 
 					  	invalid_file_counter := 0;
-
-					  	--file_counter  := 0;
 
 					  	SELECT count(*) into file_counter from cms_dbs3_prod_part.Files where cms_dbs3_prod_part.Files.block_id = rec_INCONSISTENT_BLOCKS.dbs_block_id ;
 
@@ -43,19 +46,12 @@ BEGIN
 			  
 					  		BEGIN
 
-					  		--file_counter := file_counter + 1;
-
-					  		/*
-					  		SELECT * INTO rec_dbs_file
-							FROM cms_dbs3_prod_part.files
-							WHERE cms_dbs3_prod_part.files.block_id = rec_INCONSISTENT_BLOCKS.dbs_block_id; */
-
-
 							IF (rec_dbs_file.is_file_valid = 0) THEN
 
 								invalid_file_counter := invalid_file_counter + 1;
 
-								--dbms_output.put_line('count is '|| invalid_file_counter);
+								
+
 							END IF;
 					  
 					  		END;
@@ -67,14 +63,6 @@ BEGIN
    							unix_time := TRUNC(unix_time);
 
 					  	IF (invalid_file_counter = file_counter) THEN
-
-								--dbms_output.put_line('its invalid completely');
-								
-								/* 
-								UPDATE INCONSISTENT_BLOCKS
-								SET contains_files = 9
-								WHERE INCONSISTENT_BLOCKS.dbs_block_id = rec_INCONSISTENT_BLOCKS.dbs_block_id;
-								*/
 
 								insert into invalid_dbs_blocks
 									values(rec_INCONSISTENT_BLOCKS.dbs_block_id,file_counter,invalid_file_counter,1,unix_time);
@@ -91,14 +79,10 @@ BEGIN
 					  	END;	
 
             COMMIT;
-                
-			  
+                 
 			  END LOOP;
 
 	  END;
-
-
-
 
 END;
 /  

@@ -1,3 +1,10 @@
+-- =============================================
+-- Author: Shubham Gupta 
+-- Create date: 19.08.16
+-- Description: Scans inconsistent_blocks table for cases where blocks from DBS have their counterpart from 
+-- PhEDEX and then calls the procedures file_level_verification and file_level_verification_phedx for each such 
+-- block found in the inconsistent_blocks tables.
+-- =============================================
 Create or REPLACE Procedure file_level_driver IS
 
 

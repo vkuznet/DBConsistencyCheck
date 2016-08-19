@@ -4,7 +4,7 @@
 
 Phedex and DBS store checksums in different ways. While DBS has seperate fields for each type of checksum, Phedex stores all checksume in a single field as a set of key value pairs.
 
-This procedure takes the string of key value pairs of phedex checksums as input and provides output in the form of Adler32 and Checksum.These values are then used for comparison of files between DBS and PhEDEX.
+This procedure takes the string of key value pairs f phedex checksums as input and provides outputs in the form of Adler32 and Checksum.These values then can be used for comparison of files between DBS and PhEDEX.
 
 #Table\_create
 
@@ -23,7 +23,7 @@ Performs identical functions as the insert\_inconsistent\_block but for inconsis
 
 Truncates the contents of inconsistent\_blocks, inconsistent\_files, invalid\_dbs\_blocks tables. this procedure is normally executed before every run of consistency\_verification\_sequence to truncate and clear the tables of their old contents.Can also be called seperately if required to clear the tables.
 
-# File\_level\_driver
+# File level\_driver
 
 Scans inconsistent\_blocks table for cases where blocks from DBS have their counterpart from PhEDEX and then calls the procedures file\_level\_verification and file\_level\_verification\_phedx for each such block found in the inconsistent\_blocks tables.
 
@@ -44,7 +44,7 @@ Also if the number of invalid files is found to be zero then details of such a b
 
 # Consistency\_verification\_2
 
-One of the important procedures. This procedure scans the BLOCKS table in DBS and T\_DPS\_BLOCK table in PhEDEX to find inconsistent blocks by comparing parameters such as block size, the number of files in the block (file count) and also the open/close status of the block. Blocks where these parameters don't match or cases where there is a DBS block for which a PhEDEX block is not found are then stored in the inconsitent\_blocks table using the insert\_inconsistent\_block\_procedure.
+One of the important procedures. This procedure scans the BLOCKS table in DBS and T\_DPS\_BLOC table in PhEDEX to find inconsistent blocks by comparing parameters such as block size, the number of files in the block (file count) and also the open/close status of the block. Blocks where these parameters don't match or cases where there is a DBS block for which a PhEDEX block is not found are then stored in the inconsitent\_blocks table using the insert\_inconsistent\_block\_procedure.
 
 # Consistency\_verification\_phedx
 
@@ -54,4 +54,4 @@ checked and handled by the other procedure.This procedure Just detects absence o
 
 # Verify\_consistency\_sequence
 
-The procedure which runs a sequence of other procedures. It effectively is the procedure that orchestrates the wole consisteny verifiction process. It starts with wiping old data from the tables and then it runs consistency\_verification\_2 followed by consistency\_verification_phedx and then it runs the file\_level\_driver and finally runs file invalidation process. This procedure is expected to be run as a DBMS Job periodically.
+The procedure which runs a sequence of other procedures. it efectively is the procedure that orchestrates the wole consisteny verifiction process. It starts with wiping old data from the tables and then it runs consistency\_verification\_2 followed by consistency\_verification\_phedx and then it runs the file\_level\_driver and finally runs file invalidation process. This procedure is expected to be run as a DBMS Job periodically.

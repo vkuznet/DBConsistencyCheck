@@ -1,3 +1,11 @@
+-- =============================================
+-- Author: Shubham Gupta 
+-- Create date: 19.08.16
+-- Description: This procedure's function is to insert a record into the inconsistent_blocks table.
+-- The reason behind creating this procedure rather than using a direct insert statement was to make 
+-- it to easier and shorter to use insertion and also as capabilities like producing the time stamp
+-- and converting it into unix time can be handled bythe procedure automatically.
+-- =============================================
 CREATE OR REPLACE PROCEDURE insert_inconsistent_block
 (dbs_block in NUMBER, Phedx_block in NUMBER,Block_size_DBS in NUMBER,block_size_PhEDX in NUMBER,
 	file_count_dbs in NUMBER,file_count_PhEDX in NUMBER,open_status_DBS in NUMBER,open_status_PhEDX in NUMBER,
@@ -42,9 +50,7 @@ BEGIN
 				dataset_id_phedx,
 				name_dbs,
 				name_phedx
-				);
-
-	--dbms_output.put_line('BLOCK Insert Successful');		
+				);	
   
     END;
 

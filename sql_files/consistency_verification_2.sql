@@ -1,5 +1,11 @@
-set serveroutput on;
-
+-- =============================================
+-- Author: Shubham Gupta 
+-- Create date: 19.08.16
+-- Description: One of the important procedures. This procedure scans the BLOCKS table in DBS and T_DPS_BLOC table in PhEDEX to 
+-- find inconsistent blocks by comparing parameters such as block size, the number of files in the block (file count) and also the
+-- open/close status of the block. Blocks where these parameters don't match or cases where there is a DBS block for which a PhEDEX 
+-- block is not found are then stored in the inconsitent_blocks table using the insert_inconsistent_block_procedure.
+-- =============================================
 Create or REPLACE Procedure Consistency_verification IS
 BEGIN
 
@@ -19,7 +25,7 @@ DECLARE
  
 
   --file status information
-  status varchar2(40);
+  status varchar2(40); --deprecated later, not used as of 19.08.16
 
   count_status number(1);
   size_status number(1);
@@ -40,17 +46,12 @@ BEGIN
       count_status:= 0;
       size_status := 0;
       open_status := 0;
-      
-      --dbms_output.put_line(rec_dbs.BLOCK_NAME || ' Found in DBS');
+
   
       SELECT * INTO rec1_phedx
       FROM CMS_TRANSFERMGMT_PART.T_DPS_BLOCK
       WHERE rec_dbs.BLOCK_NAME = cms_transfermgmt_part.T_DPS_BLOCK.NAME;
   
-       --dbms_output.put_line( rec1_phedx.NAME|| ' Also found in PhEDX');
-
-       
-          
           IF (rec_dbs.BLOCK_SIZE != rec1_phedx.BYTES ) THEN 
           is_consistent :=FALSE;
           size_status:= 1; 
@@ -75,17 +76,11 @@ BEGIN
           
                                  
        IF (NOT is_consistent) THEN
-        --dbms_output.put_line(' NOT CONSISTENT');
+     
 
         insert_inconsistent_block(rec_dbs.BLOCK_ID,rec1_phedx.ID,rec_dbs.BLOCK_SIZE,rec1_phedx.BYTES,rec_dbs.FILE_COUNT,rec1_phedx.FILES,rec_dbs.OPEN_FOR_WRITING,open_status_phedx,rec_dbs.DATASET_ID,rec1_phedx.DATASET,rec_dbs.BLOCK_NAME,rec1_phedx.NAME);--,size_status,count_status,open_status);
 
-       
-        --dbms_output.put_line('Number of inconsistencies '||counter ||' ');
-
        END IF; 
-
-
-
 
        -- Handles cases where a DBS block record is not found in PhEDX Block table
        
@@ -103,7 +98,9 @@ BEGIN
 
           when TOO_MANY_ROWS THEN
           --dbms_output.put_line(' NOT CONSISTENT too many'); to be handled later
-          
+          -- A very small smount of Phedex rows have the same names but they blong to diffrent DBS' . These row for now
+          -- are ignored but ideally code appearing here should be able to deal with those cases by narrowing down the block to
+          -- the global DBS.
           continue;
        
        END;
