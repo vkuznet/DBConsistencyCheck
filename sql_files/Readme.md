@@ -44,7 +44,7 @@ Also if the number of invalid files is found to be zero then details of such a b
 
 # Consistency\_verification\_2
 
-One of the important procedures. This procedure scans the BLOCKS table in DBS and T\_DPS\_BLOC table in PhEDEX to find inconsistent blocks by comparing parameters such as block size, the number of files in the block (file count) and also the open/close status of the block. Blocks where these parameters don't match or cases where there is a DBS block for which a PhEDEX block is not found are then stored in the inconsitent\_blocks table using the insert\_inconsistent\_block\_procedure.
+One of the important procedures. This procedure scans the BLOCKS table in DBS and T\_DPS\_BLOCK table in PhEDEX to find inconsistent blocks by comparing parameters such as block size, the number of files in the block (file count) and also the open/close status of the block. Blocks where these parameters don't match or cases where there is a DBS block for which a PhEDEX block is not found are then stored in the inconsitent\_blocks table using the insert\_inconsistent\_block\_procedure.
 
 # Consistency\_verification\_phedx
 
