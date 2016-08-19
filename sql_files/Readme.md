@@ -54,4 +54,4 @@ checked and handled by the other procedure.This procedure Just detects absence o
 
 # Verify\_consistency\_sequence
 
-The procedure which runs a sequence of other procedures. it efectively is the procedure that orchestrates the wole consisteny verifiction process. It starts with wiping old data from the tables and then it runs consistency\_verification\_2 followed by consistency\_verification\_phedx and then it runs the file\_level\_driver and finally runs file invalidation process. This procedure is expected to be run as a DBMS Job periodically.
+The procedure which runs a sequence of other procedures. it effectively is the procedure that orchestrates the wole consisteny verifiction process. It starts with wiping old data from the tables and then it runs consistency\_verification\_2 followed by consistency\_verification\_phedx and then it runs the file\_level\_driver and finally runs file invalidation process. This procedure is expected to be run as a DBMS Job periodically.
