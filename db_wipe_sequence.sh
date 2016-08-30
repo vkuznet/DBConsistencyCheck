@@ -1,5 +1,5 @@
 sqlplus -s /nolog << EOF
-CONNECT dbname/password;
+CONNECT username/password;
 
 whenever sqlerror exit sql.sqlcode;
 set echo off 

@@ -1,4 +1,13 @@
-/* Procedure to Verify Consistency at file level when block id for files is provided as input*/
+-- =============================================
+-- Author: Shubham Gupta 
+-- Create date: 19.08.16
+-- Description: /* Procedure to Verify Consistency at file level when block id for files is provided as input*/
+-- Finds all the files in DBS for a given DBS block_id and then finds the corresponding file in PhEDEX. If 
+-- the file is found then compares paramter such as file size and checksums,Adler32 and stores the results via 
+-- insert_inconsistent_file procedure if an inconsistency is found. If file is not found in PhEDEX then also an 
+-- inconsistency is recorded using the insert_inconsistent_file procedure.
+-- =============================================
+
 
 Create or REPLACE Procedure file_level_verification( input_block_id in varchar2) IS
 
@@ -35,9 +44,7 @@ BEGIN
 			  
 					  BEGIN
             
-                --status_information_return := 'NORMAL';
-
-					  		file_is_consistent := True;
+  					  		file_is_consistent := True;
 
 					  		checksum_status := 1;
 							adler32_status	:= 1;
@@ -76,39 +83,15 @@ BEGIN
 
 						          END IF;		
 
-                        		  --status_information_return := 'ATLEAST_ONE_INCONSISTENT';
-
-
                         		 IF (file_is_consistent = FALSE) THEN 	
-						          	--insert row into table
 
 						           insert_inconsistent_file(rec_dbs_file.LOGICAL_FILE_NAME,checksum_status,adler32_status, size_status,rec_dbs_file.block_id,rec1_phedx_file.INBLOCK,rec_dbs_file.CHECK_SUM,cksum_value ,rec_dbs_file.ADLER32,adler32_value,rec_dbs_file.file_SIZE,rec1_phedx_file.FILESIZE);
 
 						          END IF;	
 
-						          	-- checksum verification procedure
-
-						          /*checksum_parser_phedx(rec1_phedx_file.CHECKSUM,adler32_var,checksum_var);
-
-						          IF (file_is_consistent  AND  rec_dbs_file.ADLER32 = adler32_var AND rec_dbs_file.CHECK_SUM = checksum_var	) THEN
-
-						          	dbms_output.put_line('checsum consistent hai');
-
-						          END IF;*/
-
-
-
-
 					    EXCEPTION
 
 						        when NO_DATA_FOUND THEN
-
-						        --dbms_output.put_line(' File NOT located in PhEDX');
-
-						        --status_information_return := 'NO_FILES_FOUND_IN_PHEDX_FROM_DBS';
-
-						        --insert row into table
-
 						        insert_inconsistent_file(rec_dbs_file.LOGICAL_FILE_NAME,NULL,NULL,NULL,rec_dbs_file.block_id,NULL,rec_dbs_file.CHECK_SUM,NULL,rec_dbs_file.ADLER32,NULL,rec_dbs_file.file_SIZE,NULL);
                     CONTINUE;
 
@@ -118,5 +101,9 @@ BEGIN
 
 	  COMMIT;
 	  END;
+
+
+
+
 END;
 /  

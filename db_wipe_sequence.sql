@@ -1,4 +1,4 @@
---WARNING : Execute only if you're sure about what you're doing
+--WARNING : Execute only if you're sure about what you're doing. this removes DBconitency check tool from the DB. DBMS_Job needs to be removed manually. 
 truncate table inconsistent_blocks;
 truncate table inconsistent_files;
 truncate table invalid_dbs_blocks;

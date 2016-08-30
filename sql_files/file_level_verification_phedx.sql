@@ -1,4 +1,13 @@
-Create or REPLACE Procedure file_level_verification_phedx( input_block_id IN varchar2)--, status_information_return OUT varchar2 ) 
+-- =============================================
+-- Author: Shubham Gupta 
+-- Create date: 19.08.16
+-- Description: Finds all the files in DBS for a given DBS block_id and then finds the corresponding file in PhEDEX.
+-- If the file is found then compares paramter such as file size and checksums,Adler32 and stores the results via 
+-- insert_inconsistent_file procedure if an inconsistency is found. If file is not found in PhEDEX then also an inconsistency 
+-- is recorded using the insert_inconsistent_file procedure.
+-- =============================================
+
+Create or REPLACE Procedure file_level_verification_phedx( input_block_id IN varchar2)
 IS
 
 	BEGIN
@@ -10,28 +19,21 @@ IS
 	    rec1_phedx_file  cms_transfermgmt_part.T_DPS_FILE%ROWTYPE;
 
 	    initial_select NUMBER;
-      --input_block_id varchar2(30);
-      adler32_value  varchar2(100 BYTE);
-       cksum_value  varchar2(100 BYTE);
+        adler32_value  varchar2(100 BYTE);
+        cksum_value  varchar2(100 BYTE);
 
 	  BEGIN
-	    
-	  	--SELECT ID INTO input_block_id from CMS_TRANSFERMGMT_PART.T_DPS_BLOCK where CMS_TRANSFERMGMT_PART.T_DPS_BLOCK.NAME = input_block_name ;
+	  
 	  	SELECT count(*) INTO initial_select FROM CMS_TRANSFERMGMT_PART.T_DPS_FILE  where CMS_TRANSFERMGMT_PART.T_DPS_FILE.INBLOCK = input_block_id ;
       
 
 	  	IF (initial_select = 0) THEN
 
 	  	continue;	
-	  	 --dbms_output.put_line(' No Rows Selected in PhEDX');
-	  	 --status_information_return := 'NO_FILES_FOUND_IN_PHEDX';
-
-	  	 --code to add all files into the file inconsistency table
+	  	 --the case where there are no PhEDEx files for a given block id. Nothing to be done here in such a case.
 	  	 
+		ELSE
 
-	  	ELSE
-
-	  		--status_information_return := 'NORMAL';
 
 	  		FOR rec1_phedx_file IN (SELECT * FROM CMS_TRANSFERMGMT_PART.T_DPS_FILE where CMS_TRANSFERMGMT_PART.T_DPS_FILE.INBLOCK = input_block_id) 
 			  LOOP
@@ -41,16 +43,12 @@ IS
 							FROM cms_dbs3_prod_part.files
 							WHERE rec1_phedx_file.LOGICAL_NAME = cms_dbs3_prod_part.files.LOGICAL_file_NAME;
 
-							--dbms_output.put_line(rec1_phedx_file.LOGICAL_NAME || ' File located again in DBS');
-
 					EXCEPTION
 
 						when NO_DATA_FOUND THEN
 
 						    dbms_output.put_line(' File NOT located in DBS');
-						    --status_information_return := 'ATLEAST_ONE_MISING_IN_DBS';
-						    --code to add this file into the file inconsistency table
-						    --insert_inconsistent_file(rec1_phedx_file.LOGICAL_NAME,2,2,2,0,rec1_phedx_file.INBLOCK);
+					
 						    checksum_parser_phedx( rec1_phedx_file.CHECKSUM, adler32_value, cksum_value);
 
 						    insert_inconsistent_file(rec1_phedx_file.LOGICAL_NAME,NULL,NULL,NULL,NULL,rec1_phedx_file.INBLOCK,NULL,adler32_value,NULL,cksum_value,NULL,rec1_phedx_file.FILESIZE);

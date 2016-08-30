@@ -37,7 +37,7 @@
 
 * Encountered a new type of error (TOO_MANY_ROWS) when converting Block consistecy code to a procedure. The cause of the error was the presence of BLOCKs with same names in PhEDX. This is allowed as the blocks can have same names and can belong to different DBS's that is they all may not belong to the GLOBAL production DBS. Resolving this error requires the creation of a special procedure to handle this exceptional case.
 
-* Also Learnt about the differnt methods of data removal in DBS and PhEDX. While PhEDX removes and deletes data that is no longer required, DBS on the other hand stores such data along with parameters that declare it invalid. These parameters are stored either at the dataset level or at the File level. So this is the reason why earlier most of the inconsistencies were of the type present in DBS but not in PhEDX as most of these were invalid state/deleted Blocks.   
+* Also Learnt about the differnt methods of data removal in DBS and PhEDX. While PhEDX removes and deletes data that is no longer required, DBS on the other hand stores such data along with parameters that declare it invalid. These parameters are stored either at the dataset level or at the File level. So this is the reason why earlier most of the inconsistencies were of the type present in DBS but not in PhEDX as most of these were invalid state/deleted Blocks.
 
 * Developed the filelevel consistency verification procedure  wich takes the BLOCK ID as input to obtain files with the same Logical File name and checks for consistency of files by compairing checksums and Filesizes.
 
@@ -67,6 +67,52 @@
 * As a result of the newly created insertion procedures, new insight into the number of inconsistencies was made, the latest numbers are 966,142 inconsistent blocks of which 133,643 were found to be invalid. 104,868 blocks have differences in file count, size or block open/close status.
 
 * Currently working on implementing Command line interface and it associated functions for consistency verification procedure. 
+
+## Week 6
+
+* Added new fields to tables to satisfy the requirements of the CSV files that would be produced by the command line interface.
+
+* Modified insert procedures according to the new fields created as required by the cli for the creation of CSV files.
+
+* Created file_level_driver procedure for running the file_level_verification and file_level_verification_phedx procedures on a set of blocks.
+
+* Created the command line interface using argparse. See command line interface documentation for more details.
+
+## Week 7
+
+* Added docstrings to all python files.
+
+* Improved the organization of code and encapsulated many of the repitive statements into functions.
+
+* Changed the method for clearing data from tables from delete to truncate which is faster.
+
+* Improved table creation procedures includng modifying the create table statements to accomodate the new schema changes that were done during the course of CLI creation.
+
+* Added forward slashes to all sql script files to allow for execution during running of scripts.
+
+## Week 8
+
+* Organized Python code and Sql code into seperate folders
+
+* Created and tested the install\_tables\_and\_procedures.sh which combines all sql procedures found in the sql_files into a single large sql file which is then executed automatically on the DB thus helping in an automated installation of the system.
+
+* Also created the db\_wipe\_sequence which undos the work done by the install\_tables\_and\_procedures.sh. This script was found to be useful during testing and has been provided for cases where the removal of these procedures is required.
+
+* Presented work to IT-DB group.
+
+## week 9
+
+* Presented work during the CERN OpenLab Lightning talks.
+
+* Worked on creating the Create\_job procedure which has been set to run the verify\_consistency\_sequence procedure as a  DBMS job every day at 03:00 as advised by Kate.
+
+* Integrated this procedure into the install\_tables\_and\_procedures.sh to allow the automated installation procedure be capable of a complete installation.
+
+* Performed a clean up of the code, removed old and useless comments and added some also.
+
+* Added comment headers to all sql files to improve teir documentation.
+
+* Working on creating the final report and Documentation.
 
 
 

@@ -1,3 +1,8 @@
+-- =============================================
+-- Author: Shubham Gupta 
+-- Create date: 19.08.16
+-- Description: Performs identical functions as the insert_inconsistent_block but for inconsistent files.
+-- =============================================
 CREATE OR REPLACE PROCEDURE insert_inconsistent_file(
 
 		lfn in varchar2, cksum in number, 
@@ -49,7 +54,6 @@ BEGIN
 					size_dbs,
 					size_phedx);
 
-	--dbms_output.put_line('File Insert Successful');		
   
     END;
 

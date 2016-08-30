@@ -23,7 +23,7 @@ Performs identical functions as the insert\_inconsistent\_block but for inconsis
 
 Truncates the contents of inconsistent\_blocks, inconsistent\_files, invalid\_dbs\_blocks tables. this procedure is normally executed before every run of consistency\_verification\_sequence to truncate and clear the tables of their old contents.Can also be called seperately if required to clear the tables.
 
-# File\_level\_driver
+# File level\_driver
 
 Scans inconsistent\_blocks table for cases where blocks from DBS have their counterpart from PhEDEX and then calls the procedures file\_level\_verification and file\_level\_verification\_phedx for each such block found in the inconsistent\_blocks tables.
 

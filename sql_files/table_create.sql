@@ -1,3 +1,10 @@
+-- =============================================
+-- Author: Shubham Gupta 
+-- Create date: 19.08.16
+-- Description: Contains all the SQL satements that are used to create the tables, sequences and triggers
+-- required by the procedures.The sequences and triggers are used in alloting a unique ID to each record of
+-- the tables automatically.
+-- =============================================
 Create table INCONSISTENT_BLOCKS 
 (
 ID NUMBER PRIMARY KEY,
