@@ -13,11 +13,11 @@ DECLARE
 
   -- row variable declaration for DBS Block table
  
-  rec_dbs  cms_dbs3_prod_part.BLOCKS%ROWTYPE;
+  rec_dbs  CMS_DBS3_PROD_GLOBAL_OWNER.BLOCKS%ROWTYPE;
   
   -- row variable declaration for PhEDX Block table
   
-  rec1_phedx  cms_transfermgmt_part.T_DPS_BLOCK%ROWTYPE;
+  rec1_phedx  CMS_TRANSFERMGMT.T_DPS_BLOCK%ROWTYPE;
   
   --consistency consition status variable
   
@@ -36,7 +36,7 @@ DECLARE
 BEGIN
      
      -- Looping through every DBS BLOCK record
-     FOR rec_dbs IN (SELECT * FROM cms_dbs3_prod_part.blocks) LOOP
+     FOR rec_dbs IN (SELECT * FROM CMS_DBS3_PROD_GLOBAL_OWNER.blocks) LOOP
      
       BEGIN
       
@@ -49,8 +49,8 @@ BEGIN
 
   
       SELECT * INTO rec1_phedx
-      FROM CMS_TRANSFERMGMT_PART.T_DPS_BLOCK
-      WHERE rec_dbs.BLOCK_NAME = cms_transfermgmt_part.T_DPS_BLOCK.NAME;
+      FROM CMS_TRANSFERMGMT.T_DPS_BLOCK
+      WHERE rec_dbs.BLOCK_NAME = CMS_TRANSFERMGMT.T_DPS_BLOCK.NAME;
   
           IF (rec_dbs.BLOCK_SIZE != rec1_phedx.BYTES ) THEN 
           is_consistent :=FALSE;
