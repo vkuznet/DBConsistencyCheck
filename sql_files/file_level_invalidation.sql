@@ -20,7 +20,7 @@ BEGIN
 
 	    rec_INCONSISTENT_BLOCKS  INCONSISTENT_BLOCKS%ROWTYPE;
 
-	    rec_dbs_file  cms_dbs3_prod_part.FILES%ROWTYPE;
+	    rec_dbs_file  CMS_DBS3_PROD_GLOBAL_OWNER.FILES%ROWTYPE;
 
 	    invalid_file_counter number;
 
@@ -39,9 +39,9 @@ BEGIN
 
 					  	invalid_file_counter := 0;
 
-					  	SELECT count(*) into file_counter from cms_dbs3_prod_part.Files where cms_dbs3_prod_part.Files.block_id = rec_INCONSISTENT_BLOCKS.dbs_block_id ;
+					  	SELECT count(*) into file_counter from CMS_DBS3_PROD_GLOBAL_OWNER.Files where CMS_DBS3_PROD_GLOBAL_OWNER.Files.block_id = rec_INCONSISTENT_BLOCKS.dbs_block_id ;
 
-					  	 FOR rec_dbs_file IN (SELECT * FROM cms_dbs3_prod_part.Files where cms_dbs3_prod_part.Files.block_id = rec_INCONSISTENT_BLOCKS.dbs_block_id ) 
+					  	 FOR rec_dbs_file IN (SELECT * FROM CMS_DBS3_PROD_GLOBAL_OWNER.Files where CMS_DBS3_PROD_GLOBAL_OWNER.Files.block_id = rec_INCONSISTENT_BLOCKS.dbs_block_id ) 
 			  			 LOOP
 			  
 					  		BEGIN
