@@ -16,11 +16,11 @@ DECLARE
 
   -- row variable declaration for DBS Block table
  
-  rec_dbs  cms_dbs3_prod_part.BLOCKS%ROWTYPE;
+  rec_dbs  CMS_DBS3_PROD_GLOBAL_OWNER.BLOCKS%ROWTYPE;
   
   -- row variable declaration for PhEDX Block table
   
-  rec1_phedx  cms_transfermgmt_part.T_DPS_BLOCK%ROWTYPE;
+  rec1_phedx  CMS_TRANSFERMGMT.T_DPS_BLOCK%ROWTYPE;
 
   --open/close status variable
   
@@ -30,13 +30,13 @@ DECLARE
 BEGIN
      
      
-     FOR rec1_phedx IN (SELECT * FROM cms_transfermgmt_part.T_DPS_BLOCK) LOOP
+     FOR rec1_phedx IN (SELECT * FROM CMS_TRANSFERMGMT.T_DPS_BLOCK) LOOP
      
       BEGIN
     
       SELECT * INTO rec_dbs
-      FROM cms_dbs3_prod_part.BLOCKS
-      WHERE cms_dbs3_prod_part.BLOCKS.BLOCK_NAME = rec1_phedx.NAME;
+      FROM CMS_DBS3_PROD_GLOBAL_OWNER.BLOCKS
+      WHERE CMS_DBS3_PROD_GLOBAL_OWNER.BLOCKS.BLOCK_NAME = rec1_phedx.NAME;
   
       
         EXCEPTION
