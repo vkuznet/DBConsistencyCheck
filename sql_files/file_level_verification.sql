@@ -17,9 +17,9 @@ BEGIN
 
 	  DECLARE
 
-	    rec_dbs_file  cms_dbs3_prod_part.FILES%ROWTYPE;
+	    rec_dbs_file  CMS_DBS3_PROD_GLOBAL_OWNER.FILES%ROWTYPE;
 
-	    rec1_phedx_file  cms_transfermgmt_part.T_DPS_FILE%ROWTYPE;
+	    rec1_phedx_file  CMS_TRANSFERMGMT.T_DPS_FILE%ROWTYPE;
 
 	    file_is_consistent boolean;
 
@@ -39,7 +39,7 @@ BEGIN
 
 	  BEGIN
 
-			  FOR rec_dbs_file IN (SELECT * FROM cms_dbs3_prod_part.Files where cms_dbs3_prod_part.Files.block_id = input_block_id) 
+			  FOR rec_dbs_file IN (SELECT * FROM CMS_DBS3_PROD_GLOBAL_OWNER.Files where CMS_DBS3_PROD_GLOBAL_OWNER.Files.block_id = input_block_id) 
 			  LOOP
 			  
 					  BEGIN
@@ -53,8 +53,8 @@ BEGIN
 							  dbms_output.put_line(rec_dbs_file.LOGICAL_FILE_NAME|| ' File located in DBS');
 
 							  SELECT * INTO rec1_phedx_file
-							  FROM CMS_TRANSFERMGMT_PART.T_DPS_FILE
-							  WHERE rec_dbs_file.LOGICAL_FILE_NAME = cms_transfermgmt_part.T_DPS_FILE.LOGICAL_NAME;
+							  FROM CMS_TRANSFERMGMT.T_DPS_FILE
+							  WHERE rec_dbs_file.LOGICAL_FILE_NAME = CMS_TRANSFERMGMT.T_DPS_FILE.LOGICAL_NAME;
 
 							   dbms_output.put_line(rec1_phedx_file.LOGICAL_NAME|| ' File located in PhEDX');
 
