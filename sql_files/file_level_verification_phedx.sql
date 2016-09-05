@@ -14,9 +14,9 @@ IS
   
 	 DECLARE
 
-	    rec_dbs_file  cms_dbs3_prod_part.FILES%ROWTYPE;
+	    rec_dbs_file  CMS_DBS3_PROD_GLOBAL_OWNER.FILES%ROWTYPE;
 
-	    rec1_phedx_file  cms_transfermgmt_part.T_DPS_FILE%ROWTYPE;
+	    rec1_phedx_file  CMS_TRANSFERMGMT.T_DPS_FILE%ROWTYPE;
 
 	    initial_select NUMBER;
         adler32_value  varchar2(100 BYTE);
@@ -24,7 +24,7 @@ IS
 
 	  BEGIN
 	  
-	  	SELECT count(*) INTO initial_select FROM CMS_TRANSFERMGMT_PART.T_DPS_FILE  where CMS_TRANSFERMGMT_PART.T_DPS_FILE.INBLOCK = input_block_id ;
+	  	SELECT count(*) INTO initial_select FROM CMS_TRANSFERMGMT.T_DPS_FILE  where CMS_TRANSFERMGMT.T_DPS_FILE.INBLOCK = input_block_id ;
       
 
 	  	IF (initial_select = 0) THEN
@@ -35,13 +35,13 @@ IS
 		ELSE
 
 
-	  		FOR rec1_phedx_file IN (SELECT * FROM CMS_TRANSFERMGMT_PART.T_DPS_FILE where CMS_TRANSFERMGMT_PART.T_DPS_FILE.INBLOCK = input_block_id) 
+	  		FOR rec1_phedx_file IN (SELECT * FROM CMS_TRANSFERMGMT.T_DPS_FILE where CMS_TRANSFERMGMT.T_DPS_FILE.INBLOCK = input_block_id) 
 			  LOOP
 			  		BEGIN
 
 							SELECT * INTO rec_dbs_file
-							FROM cms_dbs3_prod_part.files
-							WHERE rec1_phedx_file.LOGICAL_NAME = cms_dbs3_prod_part.files.LOGICAL_file_NAME;
+							FROM CMS_DBS3_PROD_GLOBAL_OWNER.files
+							WHERE rec1_phedx_file.LOGICAL_NAME = CMS_DBS3_PROD_GLOBAL_OWNER.files.LOGICAL_file_NAME;
 
 					EXCEPTION
 
